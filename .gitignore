@@ -97,3 +97,6 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+Metaverse_Project/UserSettings
+Metaverse_Project/Library
+Metaverse_Project/obj
