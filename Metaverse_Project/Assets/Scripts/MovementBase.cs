@@ -5,9 +5,12 @@ using UnityEngine;
 public abstract class MovementBase : MonoBehaviour
 {
     Rigidbody RB;
+    [SerializeField] Transform Visuals;
+    [SerializeField] ParticleSystem EngineParticles;
     [SerializeField] float ThrottleSpeed = 8;
-    float tiltMax = 20;
-    float turnSpeed = 5f;
+    [SerializeField] float tiltMax = 40;
+    [SerializeField] float throttleTiltMax = 10;
+    [SerializeField] float turnSpeed = 5;
 
     protected virtual void Awake()
     {
@@ -25,22 +28,26 @@ public abstract class MovementBase : MonoBehaviour
         if (input.magnitude != 0)
         {
             TurnAngle = MathFunctions.FullRotationConversion(MathFunctions.AngleFromInput(input.normalized));
+            EngineParticles.Play();
         }
+        else{ EngineParticles.Stop();}
 
         //Checks the difference between the current ship angle and the input angle.
-        float AngleDifference = (MathFunctions.GetFloatDifference(transform.rotation.eulerAngles.y, TurnAngle) / 10);
+        float AngleDifference = (MathFunctions.GetFloatDifference(transform.rotation.eulerAngles.y, TurnAngle) / 100);
 
         //Tilts the boat based on the angle difference
         float RollTilt = Mathf.Clamp(AngleDifference * tiltMax, -tiltMax, tiltMax);
 
         //Gets the final rotation and lerps the boat to the new angles.
-        Quaternion FinalRotation = Quaternion.Euler(0, TurnAngle, RollTilt);
-        transform.rotation = Quaternion.Lerp(transform.rotation, FinalRotation, turnSpeed * Time.deltaTime);
+        Quaternion TiltRotation = Quaternion.Euler(-throttleTiltMax * input.magnitude, 0, RollTilt);
+        Quaternion TurnRotation = Quaternion.Euler(0, TurnAngle, 0);
+
+        Visuals.localRotation = Quaternion.Lerp(Visuals.localRotation, TiltRotation, turnSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, TurnRotation, turnSpeed * Time.deltaTime);
 
         //Movement
 
         //Uses Rigidbody forces to push the boat in its forward direction based on the throttle speed and input magnitude.
         RB.AddForce(new Vector3(transform.forward.x, 0, transform.forward.z) * ThrottleSpeed * input.magnitude, ForceMode.Impulse);
     }
-
 }

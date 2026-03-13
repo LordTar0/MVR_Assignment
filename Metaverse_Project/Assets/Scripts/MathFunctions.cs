@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public static class MathFunctions
@@ -32,6 +30,7 @@ public static class MathFunctions
         return CheckValue <= 0 ? CheckValue : CheckValue >= 0 ? CheckValue : 0.000001f;
     }
 
+    //A function for calculating the power of 'input'.
     public static float Powerby(float input, int Powerby)
     {
         for (int i = 0; i < Powerby; i++)

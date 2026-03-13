@@ -1,29 +1,9 @@
 fileFormatVersion: 2
-guid: 449f0300f662a4c4a904aee1b51c1912
+guid: 0b01428d90923c14083c8157b62eb3e3
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Exterior
-    second: {fileID: 2100000, guid: 8f0ecf62cdaa88442bd31d38414e048d, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Hull
-    second: {fileID: 2100000, guid: 0cc1c5b2ac9f74f4eb95ab5af132de81, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Interior
-    second: {fileID: 2100000, guid: e7ee741579df50b48ac4f1fa00b6453a, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Windows
-    second: {fileID: 2100000, guid: 74d5dc9c119bb404fb7e1b9b2ae90eb0, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
