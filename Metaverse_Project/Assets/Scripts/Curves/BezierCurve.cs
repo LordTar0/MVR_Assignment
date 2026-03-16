@@ -17,6 +17,11 @@ public abstract class BezierCurve : MonoBehaviour
     {
         int OutID = C_ID;
 
+        if (Points.Length <= 0) { 
+            OutID = 0; 
+            NewID = OutID; 
+            return Vector2.zero; }
+
         if (IsReversed)
         {
             OutID--;

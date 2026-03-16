@@ -17,10 +17,8 @@ public class Placement_Curve : BezierCurve
 
     private void PlaceObjects()
     {
-        List<GameObject> list = new();
-        if (Objects != null) { list.AddRange(Objects); }
         Objects = new GameObject[0];
-
+        List<GameObject> list = new();
         Debug.Log($"{list.Count}, {Points.Length}");
 
         if (list.Count > Points.Length)
@@ -51,7 +49,12 @@ public class Placement_Curve : BezierCurve
     private void UpdatePathObjectLocation()
     {
         List<GameObject> list = new();
-        list.AddRange(Objects);
+
+        if (Objects != null)
+        {
+            list.AddRange(Objects);
+        }
+
 
         if (list.Count < Points.Length) { Debug.LogWarning($"Resolution of points was changed. Please update the pathing object count."); }
 

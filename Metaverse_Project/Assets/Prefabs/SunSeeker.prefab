@@ -54,7 +54,7 @@ MonoBehaviour:
   RayHeightOffset: 1
   Visuals: {fileID: 3270303088890173087}
   EngineParticles: {fileID: 7392398116726049665}
-  ThrottleSpeed: 5
+  MaxThrottleSpeed: 3
   throttleTiltMax: 1.5
   turnSpeed: 1
   AI_Path: {fileID: 0}

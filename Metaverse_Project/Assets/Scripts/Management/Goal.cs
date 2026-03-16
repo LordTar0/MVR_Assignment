@@ -7,7 +7,6 @@ public class Goal : MonoBehaviour
     private Timer timer;
     private Transform Player;
 
-    [SerializeField] private float AngleCorrection;
     [SerializeField] private float DistanceCorrection;
 
 
@@ -31,7 +30,7 @@ public class Goal : MonoBehaviour
     {
         if (Player == null) { return; }
 
-        if (MathFunctions.GetFloatDifference(Player.rotation.eulerAngles.y, transform.rotation.eulerAngles.y) < AngleCorrection && MathFunctions.GetVector3Distance(Player.position, transform.position) < DistanceCorrection)
+        if (MathFunctions.GetVector3Distance(Player.position, transform.position) < DistanceCorrection)
         {
             Debug.Log($"IM WORKING!");
         }
