@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class MathFunctions
@@ -33,12 +34,30 @@ public static class MathFunctions
     //A function for calculating the power of 'input'.
     public static float Powerby(float input, int Powerby)
     {
-        for (int i = 0; i < Powerby; i++)
+        float output = input;
+
+        for (int i = 1; i < Powerby; i++)
         {
-            input *= input;
+            output *= input;
         }
 
-        return input;
+        return output;
+    }
+
+    public static int ArrayLoop(int Length, int ID, bool IsReversed)
+    {
+        int newID = ID + 1;
+
+        if (IsReversed)
+        {
+            if (newID < 0) newID = Length - 1;
+        }
+        else
+        {
+            if (newID == Length) newID = 0;
+        }
+
+        return newID;
     }
 
     #endregion
@@ -77,6 +96,11 @@ public static class MathFunctions
 
     #region Vector 2 Math
 
+    public static Vector2 GetTopDownVec2(Vector3 Obj)
+    {
+        return new Vector2(Obj.x, Obj.z);
+    }
+
     public static float GetVector2Distance(Vector2 Obj, Vector2 Target)
     {
         float x = GetAbsoluteFloatDifference(Obj.x, Target.x);
@@ -104,6 +128,28 @@ public static class MathFunctions
         CheckVector.y = MultiCheck(CheckVector.y);
 
         return CheckVector;
+    }
+
+    //Gets a list of points along a 'Quadratic' Bezier Curve, A = Start, B = Middle, C = End, Resolution = How many points along the line
+    public static Vector2[] GetBezierCurve(Vector2 A, Vector2 B, Vector2 C, int Resolution)
+    {
+        List<Vector2> CurvePoints = new();
+
+        //Clamps the Resolution so it's always between 3 and 100 for optimisation sake.
+        Resolution = Mathf.Clamp(Resolution, 3, 100);
+
+        for (int i = 0; i < Resolution+1; i++)
+        {
+            Vector2 point = new();
+            float time = i / (float)Resolution;
+            float unit = 1 - time;
+
+            point += (Powerby(unit, 2) * A) + (2 * unit * time * B) + (Powerby(time, 2) * C);
+
+            CurvePoints.Add(point);
+        }
+
+        return CurvePoints.ToArray();
     }
 
     #endregion
@@ -137,5 +183,4 @@ public static class MathFunctions
         return new Vector3(x, y, z).normalized;
     }
     #endregion
-
 }

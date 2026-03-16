@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,7 +34,7 @@ public abstract class MovementBase : MonoBehaviour
         else{ EngineParticles.Stop();}
 
         //Checks the difference between the current ship angle and the input angle.
-        float AngleDifference = (MathFunctions.GetFloatDifference(transform.rotation.eulerAngles.y, TurnAngle) / 100);
+        float AngleDifference = (MathFunctions.GetFloatDifference(transform.rotation.eulerAngles.y, TurnAngle) / 180);
 
         //Tilts the boat based on the angle difference
         float RollTilt = Mathf.Clamp(AngleDifference * tiltMax, -tiltMax, tiltMax);
@@ -42,8 +43,8 @@ public abstract class MovementBase : MonoBehaviour
         Quaternion TiltRotation = Quaternion.Euler(-throttleTiltMax * input.magnitude, 0, RollTilt);
         Quaternion TurnRotation = Quaternion.Euler(0, TurnAngle, 0);
 
-        Visuals.localRotation = Quaternion.Lerp(Visuals.localRotation, TiltRotation, turnSpeed * Time.deltaTime);
-        transform.rotation = Quaternion.Lerp(transform.rotation, TurnRotation, turnSpeed * Time.deltaTime);
+        Visuals.localRotation = Quaternion.Slerp(Visuals.localRotation, TiltRotation, turnSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, TurnRotation, turnSpeed * Time.deltaTime);
 
         //Movement
 
