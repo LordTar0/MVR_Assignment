@@ -14,10 +14,12 @@ public class PlayerMovement : MovementBase
         inputController.ShipMovement.Enable();
     }
 
-    private void FixedUpdate()
+    protected override void FixedUpdate()
     {
+        base.FixedUpdate();
+
         Vector2 input = inputController.ShipMovement.Movement.ReadValue<Vector2>();
 
-        Movement(input);
+        Movement(input, MaxThrottleSpeed);
     }
 }

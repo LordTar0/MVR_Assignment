@@ -7,50 +7,53 @@ public class AIMovement : MovementBase
 {
     private int C_Waypoin_ID = -1;
     private Vector2 C_Point = Vector2.zero;
-    [SerializeField] AI_Path AI_Path;
+    [SerializeField] BezierCurve AI_Path;
     [SerializeField] bool ReverseDirection = false;
     [SerializeField,Min(0)] float CorrectionDistance;
 
-    protected override void Awake()
+    protected override void UpdateReferences()
     {
-        base.Awake();
+        base.UpdateReferences();
         UpdateWaypoint();
     }
 
-    private void FixedUpdate()
+    protected override void FixedUpdate()
     {
-        Vector3 Vec3WP = new Vector3(C_Point.x, transform.position.y, C_Point.y);
+        base.FixedUpdate();
 
-        if (MathFunctions.GetVector3Distance(transform.position, Vec3WP) < CorrectionDistance)
+        //Checks the distance on a 2D plane between the NPC Boat & its next target
+        if (MathFunctions.GetVector2Distance(MathFunctions.GetTopDownVec2(transform.position), C_Point) < CorrectionDistance)
         {
             UpdateWaypoint();
         }
 
-        Movement(MathFunctions.GetVector2Direction(new Vector2(transform.position.x, transform.position.z), C_Point));
+        Movement(MathFunctions.GetVector2Direction(MathFunctions.GetTopDownVec2(transform.position), C_Point), MaxThrottleSpeed);
     }
 
     //Updates the next waypoint for the NPC Boat
     private void UpdateWaypoint()
     {
-        C_Point = AI_Path.GetNextWaypoint(C_Waypoin_ID, ReverseDirection, out C_Waypoin_ID);
-    }
-
-    private void OnValidate()
-    {
-        //Updates the Current Point
         if (AI_Path != null)
         {
+            //Updates the Current Point
             C_Point = AI_Path.GetNextWaypoint(C_Waypoin_ID, ReverseDirection, out C_Waypoin_ID);
         }
     }
 
-    private void OnDrawGizmos()
+    protected override void OnValidate()
     {
+        base.OnValidate();
+        UpdateWaypoint();
+    }
+
+    protected override void OnDrawGizmos()
+    {
+        base.OnDrawGizmos();
         Gizmos.color = Color.green;
         DEBUG_DrawTargetLine();
     }
 
-    //Draws a line from the NPC to its next point to see where its going.
+    //Draws a line from the NPC Boat to its next point to see where its going.
     private void DEBUG_DrawTargetLine()
     {
         Vector3 myPos = new Vector3(transform.position.x, 1, transform.position.z);

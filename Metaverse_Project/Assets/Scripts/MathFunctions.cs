@@ -184,3 +184,50 @@ public static class MathFunctions
     }
     #endregion
 }
+
+
+public static class ExtraFunctions
+{
+    public static void SmartDestroy(Object obj)
+    {
+        if (obj == null) return;
+
+#if UNITY_EDITOR
+        if (!Application.isPlaying) { GameObject.DestroyImmediate(obj); }
+        else
+#endif
+        { GameObject.Destroy(obj); }
+    }
+}
+
+[System.Serializable]
+public class Timer
+{
+    float C_Timer = -1;
+    float TimerStart = 100;
+    bool RunTimer = false;
+
+    public void SetCurrentTime(float time) { C_Timer = time; }
+    public void SetTimerStart(float time) { TimerStart = time; }
+
+    public void SetTimerToStart() { C_Timer = TimerStart; }
+
+    public void EnableTimer() { RunTimer = true; }
+
+    public void DisableTimer() { RunTimer = false; }
+
+    public float CheckTimer() { return C_Timer; }
+
+    public bool CheckTimerIsRunning() { return RunTimer; }
+
+    public bool IsTimerUp()
+    {
+        if (!RunTimer) return false;
+
+        C_Timer -= Time.deltaTime;
+
+        if (C_Timer <= 0) return true;
+
+        return false;
+    }
+}
