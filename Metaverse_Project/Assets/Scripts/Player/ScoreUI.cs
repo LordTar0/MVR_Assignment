@@ -25,6 +25,7 @@ public class ScoreUI : MonoBehaviour
         instance = this;
     }
 
+    //The update summary screen has the score, time and ranking of the player. This is filled out here.
     public void UpdateSummary(int Seconds, int Miliseconds, int Score, Rank Rank)
     {
         SummaryText.text = $"<align=left><line-height=0>Time:\n" +

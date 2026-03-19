@@ -74,17 +74,6 @@ public abstract class BezierCurve : MonoBehaviour
 
         return MathFunctions.GetTopDownVec2(transform.position);
     }
-
-
-    private Vector2 GetEndPoint(int ID)
-    {
-        Vector2 Vec2End = GetPointPosition(ID);
-
-        if (ID >= Points.Length - 1) { Vec2End = GetPointPosition(0); }
-        else { Vec2End = GetPointPosition(ID + 1); }
-
-        return Vec2End;
-    }
     #endregion
 
     #region DEBUG INFO
@@ -118,8 +107,10 @@ public abstract class BezierCurve : MonoBehaviour
 
         for (int i = 0; i < Points.Length; i++)
         {
+            int b = MathFunctions.ArrayLoop(Waypoints.Length, i, false);
+
             Vector3 Start = new Vector3(GetPointPosition(i).x, 1, GetPointPosition(i).y);
-            Vector3 End = new Vector3(GetEndPoint(i).x, 1, GetEndPoint(i).y);
+            Vector3 End = new Vector3(GetPointPosition(b).x, 1, GetPointPosition(b).y);
 
             Gizmos.DrawLine(Start, End);
 
@@ -133,6 +124,7 @@ public abstract class BezierCurve : MonoBehaviour
     }
 }
 
+//This helps with creating the waypoint system, having Waypoint as the start, Middle as well... middle and then it finds either another Waypoint as the endpoint.
 [System.Serializable]
 public class Waypoint
 {

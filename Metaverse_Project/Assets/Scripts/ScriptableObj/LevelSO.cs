@@ -24,7 +24,7 @@ public class LevelData
 }
 
 [System.Serializable]
-public class ScoreData
+public class ScoreData //Scoring system for how good the player does. They will require a score higher than what is stated to get that particular rank.
 {
     public int S_Rank = 50000;
     public int A_Rank = 10000;
@@ -34,7 +34,7 @@ public class ScoreData
 }
 
 [System.Serializable]
-public class TimeScore
+public class TimeScore // Gives a score based on how quick they are at the level. You can have as many or little Score gaps, but I would recommend having a score gap for each rank. (6)
 {
     public int time = 5;
     public int Score = 50000;

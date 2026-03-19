@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        while (!timer.IsTimerUp())
+        while (!timer.IsTimerUp()) //Timer counts down and updates the onscreen UI instance.
         {
             timer.GetSecondsMiliseconds(out int Seconds, out int Miliseconds);
 
@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     {
         if (level == null)
         {
+            //Creates the level, finds the goal and subscribes to the finished level action.
             GameObject levelOBJ = Instantiate(levelData.LevelPrefab);
             level = levelOBJ.GetComponent<Level>();
             Goal goal = level.GetGoalObj();
@@ -54,8 +55,11 @@ public class GameManager : MonoBehaviour
 
         PlayerMovement player = PlayerMovement._Instance;
 
+        //Moves the player to the level's stated position & rotation.
         player.transform.position = levelData.PlayerSpawnPosition;
         player.transform.rotation = Quaternion.Euler(0,levelData.PlayerSpawnDirection,0);
+
+        //Turns on the kinematic trigger for the player so it is still when getting ready
         Rigidbody playerRB = player.GetComponent<Rigidbody>();
         playerRB.isKinematic = true;
 

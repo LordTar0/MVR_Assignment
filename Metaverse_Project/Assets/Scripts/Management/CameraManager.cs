@@ -11,7 +11,8 @@ public class CameraManager : MonoBehaviour
 
     private void Awake()
     {
-        
+        //If the camera hasn't got a reference to a target, it will search for the player.
+        if(target == null) target = PlayerMovement._Instance?.transform;
     }
 
     private void FixedUpdate()
@@ -19,6 +20,7 @@ public class CameraManager : MonoBehaviour
         MoveCamera();
     }
 
+    //Moves the Camera to the target position and offsets it by 'offset'
     private void MoveCamera()
     {
         Vector3 newPos = target.position + offset;

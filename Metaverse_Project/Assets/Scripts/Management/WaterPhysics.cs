@@ -28,7 +28,7 @@ public abstract class WaterPhysics : MonoBehaviour
 
     private void W_Physics()
     {
-        Vector3 buoyancy = -Physics.gravity * RB.mass/1.8f;
+        Vector3 buoyancy = -Physics.gravity * RB.mass/1.8f; //Rough buoyancy Maths to counteract the gravity when in the water,
 
         if (Physics.Raycast(GetRay(0), RayHeightOffset*2, layerMask)) { RB.AddForceAtPosition(buoyancy, GetRay(0).origin);}
         if (Physics.Raycast(GetRay(1), RayHeightOffset*2, layerMask)) { RB.AddForceAtPosition(buoyancy, GetRay(1).origin);}

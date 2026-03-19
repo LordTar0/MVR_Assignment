@@ -7,8 +7,9 @@ public class Level : MonoBehaviour
     [SerializeField] private Goal Goal;
     [SerializeField] private AI_OBJ[] NPC_Objs;
 
-    public Goal GetGoalObj() { return Goal; }
+    public Goal GetGoalObj() { return Goal; } //Returns the goal script to those who need it
 
+    //Resets objects ready for the level
     public void ResetObjects()
     {
         Goal.Initialise();
@@ -20,6 +21,7 @@ public class Level : MonoBehaviour
         foreach (var obj in objs) { obj.ResetObj(); }
     }
 
+    //Starts the objects, this can be reverting the kinematic state or gravity usecases
     public void StartObjects()
     {
         List<ObjectData> objs = new();

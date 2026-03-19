@@ -11,6 +11,7 @@ public class PlayerMovement : MovementBase
 
     Goal Goal;
 
+    //Gets the goal object to point the indicator towards it based on your location.
     public void GetGoal(Goal goal)
     {
         Goal= goal;
@@ -64,6 +65,7 @@ public class PlayerMovement : MovementBase
     {
         if (InputDisabled) return;
 
+        //Ship Movement input.
         Vector2 input = inputController.ShipMovement.Movement.ReadValue<Vector2>();
         Movement(input, MaxThrottleSpeed);
     }

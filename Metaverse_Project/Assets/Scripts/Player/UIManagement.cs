@@ -15,6 +15,7 @@ public class UIManagement : MonoBehaviour
         instance = this;
     }
 
+    //Uses an Enum to display the different UI pannels. This prevents overlap.
     public void UpdateUIShown(UIShown Index)
     {
         Game_UI.gameObject.SetActive(false);
