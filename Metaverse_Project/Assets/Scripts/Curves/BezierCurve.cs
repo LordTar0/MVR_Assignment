@@ -3,21 +3,24 @@ using UnityEngine;
 
 public abstract class BezierCurve : MonoBehaviour
 {
+    [Header ("Curve Settings")]
     [SerializeField] private Waypoint[] Waypoints;
     [SerializeField, Range(3,100)] private int Resolution = 10;
     protected Vector2[] Points;
 
-    protected virtual void Awake()
+    protected virtual void Start()
     {
         UpdatePathing();
     }
+
+    #region CURVE CREATION
 
     //A public function to get the next waypoint location
     public Vector2 GetNextWaypoint(int C_ID, bool IsReversed, out int NewID)
     {
         int OutID = C_ID;
 
-        if (Points.Length <= 0) { 
+        if (Points == null) { 
             OutID = 0; 
             NewID = OutID; 
             return Vector2.zero; }
@@ -39,6 +42,7 @@ public abstract class BezierCurve : MonoBehaviour
         return GetPointPosition(OutID);
     }
 
+    //Updates the points list and where they should be located relative to the given vector2s
     private void UpdatePointList()
     {
         List<Vector2> points = new();
@@ -81,7 +85,9 @@ public abstract class BezierCurve : MonoBehaviour
 
         return Vec2End;
     }
+    #endregion
 
+    #region DEBUG INFO
     protected virtual void OnDrawGizmos()
     {
         DEBUG_DrawWaypoints();
@@ -119,6 +125,7 @@ public abstract class BezierCurve : MonoBehaviour
 
         }
     }
+    #endregion
 
     protected virtual void OnValidate()
     {

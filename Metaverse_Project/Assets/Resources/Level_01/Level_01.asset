@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f105a7f39c1decd469a847fe791e45b0, type: 3}
+  m_Name: Level_01
+  m_EditorClassIdentifier: 
+  levelData:
+    LevelPrefab: {fileID: 200346794557029094, guid: a6745e06a919891468b7bbc94603322c,
+      type: 3}
+    PlayerSpawnPosition: {x: -75, y: 0, z: 33}
+    PlayerSpawnDirection: 115
+    TimeScores:
+    - time: 25
+      Score: 50000
+    - time: 30
+      Score: 10000
+    - time: 35
+      Score: 5000
+    - time: 45
+      Score: 2500
+    - time: 60
+      Score: 1000
+    ScoreData:
+      S_Rank: 50000
+      A_Rank: 10000
+      B_Rank: 5000
+      C_Rank: 2500
+      D_Rank: 1000

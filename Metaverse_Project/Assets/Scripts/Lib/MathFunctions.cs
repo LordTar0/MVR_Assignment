@@ -84,12 +84,24 @@ public static class MathFunctions
         return angle;
     }
 
-    public static float AngleFromVec2Points(Vector2 a, Vector2 b)
+    public static float RightAngleFromVec2Points(Vector2 a, Vector2 b)
     {
         float adjacent = GetVector2Distance(a, new Vector2(b.x, a.y));
         float opposite = GetVector2Distance(new Vector2(b.x, a.y), b);
 
         return Mathf.Atan(opposite / adjacent) * Mathf.Rad2Deg;
+    }
+
+    public static float AngleFromVec2Points(Vector2 a, Vector2 b)
+    {
+        float adjacent = GetVector2Distance(b, new Vector2(a.x, b.y));
+        float opposite = GetVector2Distance(new Vector2(a.x, b.y), a);
+
+        float angle = Mathf.Atan(adjacent / opposite) * Mathf.Rad2Deg;
+
+        float newangle = a.y > b.y ? angle : 180 - angle;
+
+        return a.x > b.x ? 360 - newangle : newangle;
     }
 
     #endregion
@@ -138,7 +150,7 @@ public static class MathFunctions
         //Clamps the Resolution so it's always between 3 and 100 for optimisation sake.
         Resolution = Mathf.Clamp(Resolution, 3, 100);
 
-        for (int i = 0; i < Resolution+1; i++)
+        for (int i = 0; i < Resolution; i++)
         {
             Vector2 point = new();
             float time = i / (float)Resolution;
@@ -183,6 +195,7 @@ public static class MathFunctions
         return new Vector3(x, y, z).normalized;
     }
     #endregion
+
 }
 
 
@@ -200,33 +213,62 @@ public static class ExtraFunctions
     }
 }
 
-[System.Serializable]
 public class Timer
 {
     float C_Timer = -1;
     float TimerStart = 100;
+
     bool RunTimer = false;
+    bool ReverseTimer = false;
 
+    //Sets the current time to 'time'
     public void SetCurrentTime(float time) { C_Timer = time; }
-    public void SetTimerStart(float time) { TimerStart = time; }
 
-    public void SetTimerToStart() { C_Timer = TimerStart; }
+    //Sets the start time to 'time'
+    public void SetStartTime(float time) { TimerStart = time; }
 
+    //Sets the current time to the start
+    public void SetTimerToStartTime() { if (ReverseTimer) { C_Timer = 0; } else { C_Timer = TimerStart; } }
+
+    //Enables & Disables the timer
     public void EnableTimer() { RunTimer = true; }
-
     public void DisableTimer() { RunTimer = false; }
 
+    //Reverse timer will count up till the timer is greater than 'Start time', thus becomes 'End time'
+    public void SetReverseTimer_Active() { ReverseTimer = true; }
+    public void SetReverseTimer_Deactive() { ReverseTimer = false; }
+
+    //Checks the current time
     public float CheckTimer() { return C_Timer; }
 
+    //Checks to see if the timer is currently active
     public bool CheckTimerIsRunning() { return RunTimer; }
 
+    //Spits out time in both seconds & miliseconds, mainly used for time displays.
+    public void GetSecondsMiliseconds(out int Seconds, out int Miliseconds)
+    {
+        int timer_time = Mathf.RoundToInt(C_Timer * 100);
+        Seconds = Mathf.RoundToInt(timer_time / 100);
+        Miliseconds = Mathf.RoundToInt(Mathf.RoundToInt(timer_time) - Seconds * 100);
+    }
+
+
+    //Use this to update the time (i.e while(!IsTimerUp){return null} ).
+    //The timer will stop afterwards unless specified (like Fixed update), so use wisely.
     public bool IsTimerUp()
     {
         if (!RunTimer) return false;
 
-        C_Timer -= Time.deltaTime;
-
-        if (C_Timer <= 0) return true;
+        if (ReverseTimer)
+        {
+            C_Timer += Time.deltaTime;
+            if (C_Timer > TimerStart) { return true; }
+        }
+        else
+        {
+            C_Timer -= Time.deltaTime;
+            if (C_Timer <= 0) return true;
+        }
 
         return false;
     }

@@ -29,9 +29,10 @@ public abstract class MovementBase : WaterPhysics
 
         //Gets the final rotation and lerps the boat to the new angles.
         Quaternion TiltRotation = Quaternion.Euler(-throttleTiltMax * input.magnitude, 0, 0);
-        Quaternion TurnRotation = Quaternion.Euler(0, TurnAngle, 0);
+        Quaternion TurnRotation = Quaternion.Euler(transform.rotation.eulerAngles.x, TurnAngle, transform.rotation.eulerAngles.z);
 
-        transform.rotation = Quaternion.Slerp(transform.rotation, TurnRotation, turnSpeed * Time.deltaTime);
+        RB.angularVelocity = Vector3.Lerp(RB.angularVelocity, Vector3.zero, turnSpeed * Time.deltaTime);
+        RB.rotation = Quaternion.Slerp(transform.rotation, TurnRotation, turnSpeed * Time.deltaTime);
 
         //Movement
 

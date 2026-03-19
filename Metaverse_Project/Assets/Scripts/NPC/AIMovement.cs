@@ -17,6 +17,14 @@ public class AIMovement : MovementBase
         UpdateWaypoint();
     }
 
+    public void InitialiseNPC(AI_Path Path)
+    {
+        AI_Path = Path;
+        C_Point = Vector2.zero;
+        C_Waypoin_ID = -1;
+        UpdateReferences();
+    }
+
     protected override void FixedUpdate()
     {
         base.FixedUpdate();

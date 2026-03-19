@@ -43,15 +43,29 @@ public abstract class WaterPhysics : MonoBehaviour
 
         switch (RayType)
         {
-            case 1: ray.origin = (transform.up * RayHeightOffset) + (transform.forward * Collider.height / 2) + Collider.center + transform.position; ; break; //Front
-            case 2: ray.origin = (transform.up * RayHeightOffset) + (-transform.forward * Collider.height / 2) + Collider.center + transform.position; break; //Back
-            case 3: ray.origin = (transform.up * RayHeightOffset) + (transform.right * Collider.radius) + Collider.center + transform.position; break; //Right
-            case 4: ray.origin = (transform.up * RayHeightOffset) + (-transform.right * Collider.radius) + Collider.center + transform.position; break; //Left
-            default: ray.origin = (transform.up * RayHeightOffset) + Collider.center + transform.position; ; break; //Default Center
+            case 1: ray.origin = GetRayOrigin(transform.forward * Collider.height / 2); break; //Front
+            case 2: ray.origin = GetRayOrigin(-transform.forward * Collider.height / 2); break; //Back
+            case 3: ray.origin = GetRayOrigin(transform.right * Collider.radius); break; //Right
+            case 4: ray.origin = GetRayOrigin(-transform.right * Collider.radius); break; //Left
+            default: ray.origin = GetRayOrigin(Vector3.zero); break; //Default Center
         }
 
-        ray.direction = Vector3.down;
+        ray.direction = -transform.up;
         return ray;
+    }
+
+    //Finds the origin of the Ray used in 'Get Ray'
+    private Vector3 GetRayOrigin(Vector3 Offset)
+    {
+        Vector3 xVec = transform.right * Collider.center.x;
+        Vector3 yVec = transform.up * Collider.center.y;
+        Vector3 zVec = transform.forward * Collider.center.z;
+
+        Vector3 newOrigin = xVec+yVec+zVec;
+
+        var Pos = Offset + newOrigin + (transform.up * RayHeightOffset) + transform.position;
+
+        return Pos;
     }
 
     protected virtual void OnValidate()

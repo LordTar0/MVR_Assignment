@@ -74,7 +74,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!136 &3091943417397179686
 CapsuleCollider:
@@ -87,9 +87,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 2.5
-  m_Height: 15
+  m_Height: 16
   m_Direction: 2
-  m_Center: {x: 0, y: 0.8, z: -1}
+  m_Center: {x: 0, y: 0.8, z: -0.5}
 --- !u!1001 &3091943418940895604
 PrefabInstance:
   m_ObjectHideFlags: 0
