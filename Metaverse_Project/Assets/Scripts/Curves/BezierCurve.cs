@@ -107,7 +107,7 @@ public abstract class BezierCurve : MonoBehaviour
 
         for (int i = 0; i < Points.Length; i++)
         {
-            int b = MathFunctions.ArrayLoop(Waypoints.Length, i, false);
+            int b = MathFunctions.ArrayLoop(Points.Length, i, false);
 
             Vector3 Start = new Vector3(GetPointPosition(i).x, 1, GetPointPosition(i).y);
             Vector3 End = new Vector3(GetPointPosition(b).x, 1, GetPointPosition(b).y);
